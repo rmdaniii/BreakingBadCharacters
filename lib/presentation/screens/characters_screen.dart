@@ -1,5 +1,6 @@
 import 'package:breaking_char/business/cubit/characters_cubit.dart';
 import 'package:breaking_char/constants/colors_code.dart';
+import 'package:breaking_char/presentation/widgets/character_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,8 +20,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    allCharacters =
-        BlocProvider.of<CharactersCubit>(context).getAllCharacters();
+    BlocProvider.of<CharactersCubit>(context).getAllCharacters();
   }
 
   @override
@@ -46,9 +46,17 @@ class _CharactersScreenState extends State<CharactersScreen> {
           allCharacters = (state).characters;
           return buildLoadedListWidgets();
         } else {
-          return;
+          return showLoadingIndicator();
         }
       },
+    );
+  }
+
+  Widget showLoadingIndicator() {
+    return const Center(
+      child: CircularProgressIndicator(
+        color: ColorsCodes.YELLOW,
+      ),
     );
   }
 
@@ -69,12 +77,18 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 2/3,
+        childAspectRatio: 2 / 3,
         crossAxisSpacing: 1,
-        mainAxisSpacing:1,
+        mainAxisSpacing: 1,
       ),
-      itemBuilder: (context, index){
-        return
+      shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemCount: allCharacters.length,
+      itemBuilder: (context, index) {
+        return CharacterItem(
+          character: allCharacters[index],
+        );
       },
     );
   }

@@ -1,11 +1,10 @@
-
-
 import 'package:breaking_char/constants/strings.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-class CharacterWebService {
+import '../models/character_model.dart';
 
+class CharacterWebService {
   late Dio dio;
 
   CharacterWebService(){
@@ -16,26 +15,27 @@ class CharacterWebService {
       connectTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 20),
     );
-
-
     dio = Dio(options);
   }
 
-  Future <List<dynamic>> getAllCharacters() async{
-
-    try{
+  Future<List<CharacterModel>> getAllCharacters() async {
+    try {
       Response response = await dio.get('/character');
       if (kDebugMode) {
         print(response.data.toString());
       }
-      return response.data;
-    }catch ( e) {
+      // Assuming that response.data is a list of characters
+      List<CharacterModel> characters = (response.data as List)
+          .map((characterJson) => CharacterModel.fromJson(characterJson))
+          .toList();
+
+      return characters;
+    } catch (e) {
       if (kDebugMode) {
         print(e.toString());
       }
       return [];
     }
-
   }
 
 }
