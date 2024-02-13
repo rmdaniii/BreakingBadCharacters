@@ -11,7 +11,9 @@ class CharactersRepo {
   Future <List<CharacterModel>> getAllCharacters() async{
 
     final characters = await characterWebService.getAllCharacters();
-    return characters.map((character) =>
-        CharacterModel.fromJson(character) ).toList();
+    // return characters.map((character) =>
+    //     CharacterModel.fromJson(character) ).toList();
+
+    return characters;
   }
 }

@@ -57,20 +57,20 @@ class CharacterModel {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['name'] = name;
-    _data['status'] = status;
-    _data['species'] = species;
-    _data['type'] = type;
-    _data['gender'] = gender;
-    _data['origin'] = origin.toJson();
-    _data['location'] = location.toJson();
-    _data['image'] = image;
-    _data['episode'] = episode;
-    _data['url'] = url;
-    _data['created'] = created;
-    return _data;
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['status'] = status;
+    data['species'] = species;
+    data['type'] = type;
+    data['gender'] = gender;
+    data['origin'] = origin.toJson();
+    data['location'] = location.toJson();
+    data['image'] = image;
+    data['episode'] = episode;
+    data['url'] = url;
+    data['created'] = created;
+    return data;
   }
 
 }
