@@ -162,7 +162,6 @@ class _CharactersScreenState extends State<CharactersScreen> {
       ),
     );
   }
-
   Widget buildCharactersList() {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

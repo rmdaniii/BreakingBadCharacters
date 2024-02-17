@@ -1,5 +1,6 @@
 import 'package:breaking_char/business/cubit/characters_cubit.dart';
 import 'package:breaking_char/constants/strings.dart';
+import 'package:breaking_char/data/models/character_model.dart';
 import 'package:breaking_char/data/respository/repo_characters.dart';
 import 'package:breaking_char/data/web_services/character_web_servises.dart';
 import 'package:breaking_char/presentation/screens/characters_screen.dart';
@@ -28,8 +29,9 @@ class AppRouter {
           ),
         );
       case CharRoute.charactersDetailsScreen:
+        final character = settings.arguments as CharacterModel;
         return MaterialPageRoute(
-            builder: (_) => const CharactersDetailsScreen());
+            builder: (_) =>  CharactersDetailsScreen(character: character,));
     }
     return null;
   }
