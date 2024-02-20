@@ -3,6 +3,7 @@ import 'package:breaking_char/constants/colors_code.dart';
 import 'package:breaking_char/presentation/widgets/character_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 
 import '../../data/models/character_model.dart';
 
@@ -93,7 +94,23 @@ class _CharactersScreenState extends State<CharactersScreen> {
         title: _isSearched ? _buildSearchField() : buildAppBarTitle(),
         actions: _buildAppBarActions(),
       ),
-      body: buildBlocWidget(),
+      body: OfflineBuilder(
+          connectivityBuilder: (
+              BuildContext context,
+              ConnectivityResult connectivity,
+              Widget child,
+          ){
+            final bool connected = connectivity != ConnectivityResult.none;
+            if (connected) {
+              return buildBlocWidget();
+            }  else {
+              return _buildNoInternetWidget();
+            }
+          },
+
+        child: showLoadingIndicator(),
+      ),
+
     );
   }
 
@@ -185,4 +202,29 @@ class _CharactersScreenState extends State<CharactersScreen> {
       },
     );
   }
+
+  Widget _buildNoInternetWidget(){
+    return Center(
+      child: Container(
+        color: ColorsCodes.WHITE,
+        child:  Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20,),
+            const Text(
+              "Can't connect .. check internet...",
+              style: TextStyle(
+                fontSize: 22,
+                color: ColorsCodes.GREY,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Image.asset("assets/images/no_internet.png"),
+          ],
+        ) ,
+      ),
+    );
+  }
 }
+
+
